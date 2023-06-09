@@ -27,10 +27,10 @@ body {
     cursor: pointer;
 }
 
-.timer__start {
+.timer__btn--start {
     background: green;
 }
 
-.timer__stop {
+.timer__btn--reset {
     background: rgb(230, 32, 32);
 }

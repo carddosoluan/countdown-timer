@@ -12,20 +12,24 @@ class Timer {
         };
         
         this.interval = null;
-        this.remainingSeconds = 90;
-
-        this.start();
-        this.stop();
-
-
-        this.updateInterfaceControls();
+        this.remainingSeconds = 0;
 
         this.el.control.addEventListener("click", () => {
-            // TODO: add in the code
+            if (this.interval === null) {
+                this.start();
+            } else {
+                this.stop();
+            }
         });
 
         this.el.reset.addEventListener("click", () => {
-            // TODO: add in the code
+          const inputMinutes = prompt("Enter the number of minutes:");
+
+          if (inputMinutes < 60) {
+            this.stop();
+            this.remainingSeconds = inputMinutes * 60;
+            this.updateInterfaceTime();
+          }
         });
 
     }

@@ -14,7 +14,11 @@ class Timer {
         this.interval = null;
         this.remainingSeconds = 90;
 
-        this.updateInterfaceTime();
+        this.start();
+        this.stop();
+
+
+        this.updateInterfaceControls();
 
         this.el.control.addEventListener("click", () => {
             // TODO: add in the code
@@ -29,8 +33,44 @@ class Timer {
     updateInterfaceTime() {
         const minutes = Math.floor(this.remainingSeconds / 60);
         const seconds = this.remainingSeconds % 60;
+    
+        this.el.minutes.textContent = minutes.toString().padStart(2, "0");
+        this.el.seconds.textContent = seconds.toString().padStart(2, "0");
+        
+    }
 
-        console.log(minutes, seconds);
+    updateInterfaceControls() {
+        if(this.interval === null) {
+            this.el.control.innerHTML = `<span class="material-icons">play_arrow</span>`;
+            this.el.control.classList.add("timer__btn--start");
+            this.el.control.classList.remove("timer__btn--stop");
+        } else {
+            this.el.control.innerHTML = `<span class="material-icons">pause</span>`;
+            this.el.control.classList.add("timer__btn--stop");
+            this.el.control.classList.remove("timer__btn--start");
+        }
+    }
+
+    start() {
+        if (this.remainingSeconds === 0) return;
+
+        this.interval = setInterval(() => {
+            this.remainingSeconds--;
+            this.updateInterfaceTime();
+
+            if (this.remainingSeconds === 0) {
+                this.stop();
+            }
+        }, 1000);
+
+        this.updateInterfaceControls();
+    }
+
+    stop() {
+        clearInterval(this.interval);
+
+        this.interval = null;
+        this.updateInterfaceControls();
     }
 
     static getHTML() {
